@@ -1,0 +1,15 @@
+Host aliyun
+    HostName 123.56.84.70
+    User root
+    IdentityFile C:\Users\刘露霆\.ssh\aliyun_key
+    Port 22
+    StrictHostKeyChecking accept-new
+    UserKnownHostsFile C:\Users\刘露霆\.ssh\known_hosts
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile C:\Users\刘露霆\.ssh\aliyun_key
+    Port 22
+    StrictHostKeyChecking accept-new
+    UserKnownHostsFile C:\Users\刘露霆\.ssh\known_hosts

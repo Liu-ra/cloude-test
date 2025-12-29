@@ -1,0 +1,54 @@
+# SSH公钥配置文件 - 本地维护
+# 此文件用于管理所有需要添加到服务器的SSH公钥
+# 日期：2025年12月29日
+# 服务器：123.56.84.70
+
+# ===== 密钥1：Aliyun服务器主密钥 =====
+# 描述：用于连接阿里云服务器的主SSH密钥
+# 创建日期：2025年12月29日
+# 密钥类型：RSA 4096-bit
+# 密钥指纹：SHA256:moi8QGfBTCJDAQvvOHSJNL9FOECNmhHs8m6UKRioVEA
+# 本地路径：C:\Users\刘露霆\.ssh\aliyun_key
+# 状态：✅ 有效
+# 备注：主密钥，用于日常连接
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCcDKsXlx8vMkffIUsfsoXMSQvAAyP7oTbmJBH0h/TuYmNpY4+X/L3Fk2B8kOwOoYuLuA7eCn0s3ivFyv3APzUZpsqx1Cvz7Cl6xDAJCrQZt0SWZ86Mky1fkv8g5K3ZRlDgDCmkdJZvjX2I6GG1zaEzu9k9Ng7OlwcOrlKAQyqwvuHttGRTDfRCqvyWxUSEFR66KCQq/HlnoxElUI1/OfXQciHzO9bVL+iNLH+aOuwQkhd2PcNZiKgG5k87bbkvlQXPeZTpRRDIz7UHTbCgenbmRemGo7esnPfK6VbpCjTseMUtmqurbPYVhSR6H2UPX7bh5aVUX3Gim5gq1Msc9o+8wVay+kV1Xdu/ICFOgm89AoyGWLn4w7isgZMPSE3tPSx7xzEBxjYc2lQ0Lkdlx2hCD5S83V1iU5Dn2oMlt58lYPbICNCMle5y0lh08f/jt0RumODyndKr86oGc0KeubJA2n1V6ogoRVXO8XObsQgOS3XAico/nQvw2b/CzIJhes1YrnZ2XlFje6szgyWtGVN1xCnALEsY5b4V7tHSY3UDTHJeXkm8drUbMu1Va5Kg+jfJJ8mkNOl82TKLbj3+Ll2uKj0DOup03s5i8BIwTSFAtW6b1xQ8Z2hINplkfSqObzGgSdbUE90hFmAYluJqWKdf32/RK2EoheHYAFUB/67tvw==
+
+# ===== 如何在服务器上配置这些公钥 =====
+# 
+# 1. SSH登录服务器：
+#    ssh root@123.56.84.70
+#
+# 2. 创建.ssh目录（如果不存在）：
+#    mkdir -p ~/.ssh && chmod 700 ~/.ssh
+#
+# 3. 将所有公钥添加到authorized_keys：
+#    cat >> ~/.ssh/authorized_keys << 'EOF'
+#    [复制上面的公钥内容到这里]
+#    EOF
+#
+# 4. 设置正确的权限：
+#    chmod 600 ~/.ssh/authorized_keys
+#
+# 5. 验证：
+#    cat ~/.ssh/authorized_keys
+
+# ===== 密钥管理说明 =====
+# 
+# 如何添加新密钥：
+#   1. 在本地生成新密钥：ssh-keygen -t rsa -b 4096 -f C:\Users\刘露霆\.ssh\new_key
+#   2. 复制新公钥内容（.pub文件）到本文件
+#   3. 在服务器上添加：echo "ssh-rsa ..." >> ~/.ssh/authorized_keys
+#
+# 如何删除密钥：
+#   1. 从本文件中删除该密钥行
+#   2. 在服务器上编辑 ~/.ssh/authorized_keys，删除对应行
+#   3. 验证：cat ~/.ssh/authorized_keys
+#
+# 如何更新密钥：
+#   1. 修改本文件中的密钥内容
+#   2. 在服务器上编辑 ~/.ssh/authorized_keys，更新对应行
+#   3. 验证更新是否成功
+
+# ===== 文件维护记录 =====
+# 2025-12-29: 初始创建，添加主密钥
