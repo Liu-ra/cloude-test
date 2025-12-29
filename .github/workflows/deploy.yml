@@ -1,52 +1,35 @@
 name: Deploy to Aliyun
 
-# 触发条件：当推送到main/master分支时自动部署
 on:
   push:
     branches:
       - main
       - master
-  # 允许手动触发部署（在GitHub Actions页面点击"Run workflow"）
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # 第1步：检出代码
       - name: Checkout code
         uses: actions/checkout@v3
-      
-      # 第2步：配置SSH连接
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          # 从GitHub Secrets读取私钥
           echo "${{ secrets.ALIYUN_PRIVATE_KEY }}" > ~/.ssh/aliyun_key
           chmod 600 ~/.ssh/aliyun_key
-          # 自动接受主机密钥，避免"Are you sure you want to continue connecting?"提示
           ssh-keyscan -H ${{ secrets.ALIYUN_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
-      
-      # 第3步：执行远程部署脚本
+
       - name: Deploy to server
         run: |
           ssh -i ~/.ssh/aliyun_key \
               -p ${{ secrets.ALIYUN_SSH_PORT }} \
               ${{ secrets.ALIYUN_USER }}@${{ secrets.ALIYUN_HOST }} \
               'cd /path/to/your/project && bash deploy.sh'
-        # ⚠️ 需要修改：
-        #   - /path/to/your/project 改为你在服务器上的项目目录
-        #   - deploy.sh 是服务器上的部署脚本名称
-      
-      # 第4步：清理SSH密钥（确保总是执行，即使出错）
+
       - name: Cleanup SSH
         if: always()
         run: |
           rm -f ~/.ssh/aliyun_key
-
-# 需要在GitHub仓库Settings中预先配置以下Secrets：
-# ALIYUN_HOST     - 服务器IP (例：123.56.84.70)
-# ALIYUN_USER     - SSH用户 (例：root)
-# ALIYUN_PRIVATE_KEY - SSH私钥内容（完整的BEGIN/END）
-# ALIYUN_SSH_PORT - SSH端口 (例：22)
